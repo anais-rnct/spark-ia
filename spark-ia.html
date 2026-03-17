@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPARK IA — L'intelligence artificielle, enfin responsable.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800;900&family=Instrument+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #05080a;
+  --s1: #080d10;
+  --s2: #0d1519;
+  --card: #0f1a1f;
+  --border: #162028;
+  --border2: #1e2e38;
+  --spark: #00e5a0;
+  --spark2: #00c880;
+  --spark-glow: rgba(0,229,160,0.12);
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --blue: #38bdf8;
+  --violet: #a78bfa;
+  --text: #e8f4f0;
+  --dim: #6b9080;
+  --muted: #344a42;
+  --font: 'Cabinet Grotesk', sans-serif;
+  --mono: 'Instrument Mono', monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden;cursor:default}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.orb1{width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,160,.06),transparent 70%);top:-200px;right:-100px;animation:drift1 18s ease-in-out infinite}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,rgba(56,189,248,.04),transparent 70%);bottom:100px;left:-100px;animation:drift2 22s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(-60px,80px)}}
+@keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(80px,-60px)}}
+header{position:fixed;top:0;left:0;right:0;z-index:1000;height:60px;background:rgba(5,8,10,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.logo{display:flex;align-items:center;text-decoration:none}
+.logo-mark{height:40px;display:flex;align-items:center;gap:10px}
+.logo-text{font-size:20px;font-weight:900;color:var(--spark);letter-spacing:-0.5px}
+nav{display:flex;gap:2px}
+nav a{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--dim);text-decoration:none;cursor:pointer;transition:all .15s;border:none;background:none;font-family:var(--font)}
+nav a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+nav a.active{color:var(--spark);background:rgba(0,229,160,.08)}
+.header-right{display:flex;align-items:center;gap:12px}
+.pill-live{display:flex;align-items:center;gap:6px;background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.2);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--spark);font-family:var(--mono)}
+.pulse{width:6px;height:6px;background:var(--spark);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.btn-connect{background:var(--spark);color:#000;border:none;border-radius:8px;padding:7px 16px;font-family:var(--font);font-weight:800;font-size:13px;cursor:pointer;transition:opacity .15s;letter-spacing:-.2px}
+.btn-connect:hover{opacity:.85}
+.app{position:relative;z-index:1;padding-top:60px;display:flex;min-height:100vh}
+.sidebar{width:220px;flex-shrink:0;border-right:1px solid var(--border);position:fixed;top:60px;bottom:0;overflow-y:auto;padding:20px 12px;background:rgba(5,8,10,.6)}
+.sidebar-section{margin-bottom:24px}
+.sidebar-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;padding:0 8px;margin-bottom:8px;font-family:var(--mono)}
+.side-btn{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border-radius:8px;background:none;border:none;color:var(--dim);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;text-align:left;transition:all .15s;position:relative}
+.side-btn:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.side-btn.active{color:var(--spark);background:rgba(0,229,160,.07)}
+.side-btn .icon{font-size:15px;width:20px;text-align:center}
+.side-btn .badge{margin-left:auto;font-size:10px;font-family:var(--mono);background:rgba(239,68,68,.15);color:var(--red);border-radius:4px;padding:1px 5px;font-weight:600}
+.side-btn .badge-ok{margin-left:auto;font-size:10px;font-family:var(--mono);background:rgba(0,229,160,.12);color:var(--spark);border-radius:4px;padding:1px 5px}
+.source-item{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;cursor:pointer;transition:all .15s}
+.source-item:hover{background:rgba(255,255,255,.03)}
+.src-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.src-name{font-size:12px;color:var(--dim);font-weight:500}
+.src-status{margin-left:auto;font-size:10px;font-family:var(--mono);color:var(--spark)}
+content{flex:1;margin-left:220px;padding:28px 32px;max-width:1200px}
+.page{display:none}
+.page.active{display:block}
+.connect-hero{background:linear-gradient(135deg,var(--s2),var(--card));border:1px solid var(--border2);border-radius:16px;padding:28px 32px;margin-bottom:28px;position:relative;overflow:hidden}
+.connect-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,var(--spark-glow),transparent 70%);border-radius:50%}
+.connect-hero h2{font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px}
+.connect-hero p{font-size:14px;color:var(--dim);max-width:600px;line-height:1.6}
+.sources-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.src-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.src-card::before{content:'';position:absolute;inset:0;opacity:0;background:linear-gradient(135deg,var(--spark-glow),transparent);transition:opacity .2s}
+.src-card:hover::before{opacity:1}
+.src-card:hover{border-color:rgba(0,229,160,.3);transform:translateY(-2px)}
+.src-card.connected{border-color:rgba(0,229,160,.25);background:rgba(0,229,160,.04)}
+.src-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.src-logo{font-size:22px}
+.src-tag{font-size:10px;font-family:var(--mono);padding:2px 7px;border-radius:4px;font-weight:600}
+.src-tag.on{background:rgba(0,229,160,.15);color:var(--spark)}
+.src-tag.off{background:rgba(107,144,128,.1);color:var(--dim)}
+.src-card h4{font-size:13px;font-weight:700;margin-bottom:4px}
+.src-card p{font-size:11px;color:var(--dim);line-height:1.4;font-family:var(--mono)}
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 16px;position:relative;overflow:hidden;transition:all .2s;cursor:default}
+.kpi:hover{border-color:var(--border2)}
+.kpi-glow{position:absolute;top:-30px;right:-30px;width:80px;height:80px;border-radius:50%;filter:blur(30px);opacity:.5}
+.kpi-label{font-size:10px;font-family:var(--mono);color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.kpi-val{font-size:26px;font-weight:900;letter-spacing:-1px;line-height:1}
+.kpi-unit{font-size:12px;font-weight:500;color:var(--dim);margin-left:3px}
+.kpi-delta{margin-top:8px;font-size:11px;font-family:var(--mono);display:flex;align-items:center;gap:4px}
+.green{color:var(--spark)}
+.amber{color:var(--amber)}
+.red{color:var(--red)}
+.blue{color:var(--blue)}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.sh h3{font-size:16px;font-weight:800;letter-spacing:-.3px}
+.sh span{font-size:11px;font-family:var(--mono);color:var(--dim)}
+.tag-small{font-size:10px;font-family:var(--mono);padding:3px 8px;border-radius:5px;font-weight:600;display:inline-block}
+.tag-g{background:rgba(0,229,160,.12);color:var(--spark)}
+.tag-a{background:rgba(245,158,11,.12);color:var(--amber)}
+.tag-r{background:rgba(239,68,68,.12);color:var(--red)}
+.tag-b{background:rgba(56,189,248,.12);color:var(--blue)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.g3{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:20px}
+.g4{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.flow-wrap{display:flex;align-items:stretch;gap:0;margin-bottom:20px}
+.flow-col{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;flex:1}
+.flow-col h4{font-size:12px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;font-family:var(--mono)}
+.flow-arrow{display:flex;align-items:center;justify-content:center;padding:0 8px;color:var(--spark);font-size:20px;opacity:.5}
+.data-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--s1);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:12px;font-family:var(--mono)}
+.data-item .di-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.data-item .di-name{flex:1;color:var(--dim)}
+.data-item .di-val{color:var(--text);font-weight:500}
+.metric-item{display:flex;flex-direction:column;gap:2px;padding:8px 10px;background:var(--s1);border:1px solid var(--border);border-radius:8px;margin-bottom:6px}
+.metric-item .mi-label{font-size:10px;color:var(--muted);font-family:var(--mono)}
+.metric-item .mi-val{font-size:16px;font-weight:800}
+.bar-chart{display:flex;flex-direction:column;gap:9px}
+.bar-row{display:flex;align-items:center;gap:10px}
+.bar-name{font-size:11px;font-family:var(--mono);color:var(--dim);width:130px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{flex:1;height:20px;background:var(--s1);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:10px;font-family:var(--mono);font-weight:600;color:rgba(0,0,0,.7);transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.bf-g{background:linear-gradient(90deg,#064e3b,#00e5a0)}
+.bf-a{background:linear-gradient(90deg,#78350f,#f59e0b)}
+.bf-r{background:linear-gradient(90deg,#7f1d1d,#ef4444)}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-size:10px;font-family:var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:1px;padding:0 12px 10px;border-bottom:1px solid var(--border)}
+.tbl td{padding:11px 12px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tbody tr:hover td{background:rgba(0,229,160,.02)}
+.score-bar{display:flex;align-items:center;gap:8px}
+.score-track{width:60px;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.score-fill{height:100%;border-radius:3px}
+.ring-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0;gap:12px;position:relative}
+.ring-val{font-size:42px;font-weight:900;letter-spacing:-2px;color:var(--spark)}
+.ring-sub{font-size:12px;font-family:var(--mono);color:var(--dim);text-align:center}
+.reco-list{display:flex;flex-direction:column;gap:10px}
+.reco{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:flex-start;gap:14px;cursor:pointer;transition:all .15s}
+.reco:hover{border-color:rgba(0,229,160,.25);background:var(--card)}
+.reco-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.ri-g{background:rgba(0,229,160,.12)}
+.ri-a{background:rgba(245,158,11,.12)}
+.ri-b{background:rgba(56,189,248,.12)}
+.ri-v{background:rgba(167,139,250,.12)}
+.reco-body{flex:1}
+.reco-body h4{font-size:13px;font-weight:700;margin-bottom:4px;line-height:1.3}
+.reco-body p{font-size:12px;color:var(--dim);font-family:var(--mono);line-height:1.5}
+.reco-kpi{text-align:right;flex-shrink:0}
+.reco-kpi .val{font-size:15px;font-weight:800;font-family:var(--mono)}
+.reco-kpi .lbl{font-size:10px;color:var(--dim);font-family:var(--mono)}
+.reco-priority{display:flex;align-items:center;gap:6px;margin-top:6px}
+.priority-dot{width:5px;height:5px;border-radius:50%}
+.sim-layout{display:grid;grid-template-columns:380px 1fr;gap:20px}
+.sim-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:10px;font-family:var(--mono);color:var(--dim);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px}
+select,input[type=number]{width:100%;background:var(--s1);border:1px solid var(--border2);color:var(--text);font-family:var(--mono);font-size:13px;padding:10px 12px;border-radius:8px;outline:none;appearance:none;cursor:pointer}
+select:focus,input[type=number]:focus{border-color:rgba(0,229,160,.4)}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:var(--border2);border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--spark);cursor:pointer;border:2px solid var(--bg)}
+.range-row{display:flex;justify-content:space-between;font-size:10px;font-family:var(--mono);color:var(--muted);margin-top:4px}
+.btn-run{width:100%;padding:13px;background:var(--spark);color:#000;font-family:var(--font);font-weight:900;font-size:15px;border:none;border-radius:10px;cursor:pointer;letter-spacing:-.3px;transition:all .15s;position:relative;overflow:hidden}
+.btn-run:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,229,160,.3)}
+.sim-results{display:flex;flex-direction:column;gap:16px}
+.compare-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cc{background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:18px}
+.cc.best{border-color:rgba(0,229,160,.3);background:rgba(0,229,160,.04)}
+.cc .cc-label{font-size:10px;font-family:var(--mono);color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.cc .cc-model{font-size:16px;font-weight:800;margin-bottom:14px;letter-spacing:-.3px}
+.cc .stat{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;font-family:var(--mono)}
+.cc .stat:last-child{border-bottom:none}
+.cc .stat .sv{font-weight:600}
+.saving-card{background:linear-gradient(135deg,rgba(0,229,160,.08),rgba(0,200,128,.04));border:1px solid rgba(0,229,160,.25);border-radius:12px;padding:20px;text-align:center}
+.saving-card .big{font-size:28px;font-weight:900;color:var(--spark);letter-spacing:-1px}
+.saving-card .sub{font-size:12px;color:var(--dim);font-family:var(--mono);margin-top:6px}
+.saving-card .details{display:flex;justify-content:center;gap:28px;margin-top:14px}
+.saving-card .detail{text-align:center}
+.saving-card .detail .dv{font-size:18px;font-weight:800;font-family:var(--mono)}
+.saving-card .detail .dl{font-size:10px;color:var(--dim);font-family:var(--mono)}
+.roadmap{background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:18px}
+.roadmap h4{font-size:13px;font-weight:700;margin-bottom:14px}
+.road-step{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+.road-step:last-child{margin-bottom:0}
+.road-num{width:24px;height:24px;border-radius:6px;background:var(--spark);color:#000;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--mono)}
+.road-step .rt{font-size:13px;font-weight:600}
+.road-step .rd{font-size:11px;color:var(--dim);font-family:var(--mono);margin-top:2px}
+.sources-full-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.src-full-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all .2s}
+.src-full-card:hover{border-color:var(--border2)}
+.src-full-card.connected{border-color:rgba(0,229,160,.2)}
+.src-full-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.src-full-logo{font-size:28px}
+.src-full-info h4{font-size:14px;font-weight:800;margin-bottom:2px}
+.src-full-info p{font-size:11px;color:var(--dim);font-family:var(--mono)}
+.src-full-status{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono)}
+.status-on{color:var(--spark)}
+.status-off{color:var(--dim)}
+.src-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.src-metric{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:10px}
+.src-metric .sm-val{font-size:16px;font-weight:800;font-family:var(--mono);margin-bottom:2px}
+.src-metric .sm-label{font-size:10px;color:var(--dim);font-family:var(--mono)}
+.src-data-list{font-size:11px;color:var(--dim);font-family:var(--mono);line-height:1.8}
+.src-data-list span{color:var(--spark)}
+.btn-src{width:100%;margin-top:14px;padding:9px;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.25);color:var(--spark);font-family:var(--font);font-weight:700;font-size:12px;border-radius:8px;cursor:pointer;transition:all .15s}
+.btn-src:hover{background:rgba(0,229,160,.18)}
+.btn-src.disconnect{background:rgba(107,144,128,.08);border-color:var(--border);color:var(--dim)}
+.dc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.dc-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.dc-card.dc-best{border-color:rgba(0,229,160,.25);background:rgba(0,229,160,.025)}
+.dc-card.dc-warn{border-color:rgba(245,158,11,.2)}
+.dc-card.dc-bad{border-color:rgba(239,68,68,.15)}
+.dc-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.dc-flag{font-size:22px}
+.dc-header h4{font-size:14px;font-weight:800}
+.dc-header p{font-size:11px;color:var(--dim);font-family:var(--mono)}
+.dc-badge{margin-left:auto;font-size:11px;font-family:var(--mono);font-weight:700;padding:3px 8px;border-radius:6px}
+.sr{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.sr:last-child{border-bottom:none}
+.sr .sk{color:var(--dim);font-family:var(--mono)}
+.sr .sv{font-weight:700;font-family:var(--mono)}
+.rse-hero{background:linear-gradient(135deg,rgba(0,229,160,.06),rgba(56,189,248,.04));border:1px solid rgba(0,229,160,.2);border-radius:16px;padding:28px;margin-bottom:24px;display:flex;align-items:center;gap:28px}
+.rse-icon{font-size:48px}
+.rse-text h2{font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px}
+.rse-text p{font-size:14px;color:var(--dim);line-height:1.6}
+.btn-export{background:var(--spark);color:#000;border:none;border-radius:10px;padding:10px 22px;font-family:var(--font);font-weight:800;font-size:14px;cursor:pointer;transition:all .15s;margin-top:14px;display:inline-block}
+.btn-export:hover{opacity:.85}
+.rse-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.rse-m{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center}
+.rse-m .rv{font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:4px}
+.rse-m .rl{font-size:11px;font-family:var(--mono);color:var(--dim)}
+.timeline{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px}
+.tl-item{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+.tl-item:last-child{margin-bottom:0}
+.tl-date{font-size:11px;font-family:var(--mono);color:var(--dim);width:80px;flex-shrink:0;padding-top:2px}
+.tl-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.tl-content h5{font-size:13px;font-weight:700;margin-bottom:3px}
+.tl-content p{font-size:12px;color:var(--dim);font-family:var(--mono)}
+.fade-in{opacity:0;transform:translateY(12px);transition:opacity .4s,transform .4s}
+.fade-in.in{opacity:1;transform:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.toast{position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--card);border:1px solid rgba(0,229,160,.3);border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.toast.show{transform:none;opacity:1}
+.toast-icon{font-size:18px}
+</style>
+</head>
+<body>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<div class="toast" id="toast"><span class="toast-icon">✅</span><span id="toast-msg">Connecté avec succès</span></div>
+<header>
+  <a class="logo">
+    <div class="logo-mark">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#00e5a0" fill-opacity="0.15"/><path d="M8 20L14 12L18 17L22 10" stroke="#00e5a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="10" r="2" fill="#00e5a0"/></svg>
+      <span class="logo-text">SPARK IA</span>
+    </div>
+  </a>
+  <nav>
+    <a class="active" onclick="showPage('dashboard',this)">📊 Dashboard</a>
+    <a onclick="showPage('sources',this)">🔌 Sources de données</a>
+    <a onclick="showPage('simulator',this)">🔬 Simulateur</a>
+    <a onclick="showPage('infra',this)">🏗️ Infrastructure</a>
+    <a onclick="showPage('rse',this)">🌍 Rapport RSE</a>
+  </nav>
+  <div class="header-right">
+    <div class="pill-live"><div class="pulse"></div>LIVE · 12 sources actives</div>
+    <button class="btn-connect" onclick="showPage('sources',document.querySelectorAll('nav a')[1])">+ Connecter</button>
+  </div>
+</header>
+<div class="app">
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Navigation</div>
+      <button class="side-btn active" onclick="showPage('dashboard',null,this)"><span class="icon">📊</span>Dashboard</button>
+      <button class="side-btn" onclick="showPage('sources',null,this)"><span class="icon">🔌</span>Sources <span class="badge-ok">12</span></button>
+      <button class="side-btn" onclick="showPage('simulator',null,this)"><span class="icon">🔬</span>Simulateur</button>
+      <button class="side-btn" onclick="showPage('infra',null,this)"><span class="icon">🏗️</span>Infrastructure</button>
+      <button class="side-btn" onclick="showPage('rse',null,this)"><span class="icon">🌍</span>Rapport RSE</button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Sources actives</div>
+      <div class="source-item"><div class="src-dot" style="background:#4ade80"></div><div class="src-name">AWS CloudWatch</div><div class="src-status">●</div></div>
+      <div class="source-item"><div class="src-dot" style="background:#4ade80"></div><div class="src-name">Azure Monitor</div><div class="src-status">●</div></div>
+      <div class="source-item"><div class="src-dot" style="background:#4ade80"></div><div class="src-name">GCP Billing</div><div class="src-status">●</div></div>
+      <div class="source-item"><div class="src-dot" style="background:#4ade80"></div><div class="src-name">Datadog</div><div class="src-status">●</div></div>
+      <div class="source-item"><div class="src-dot" style="background:#f59e0b"></div><div class="src-name">SAP ERP</div><div class="src-status" style="color:var(--amber)">◑</div></div>
+      <div class="source-item"><div class="src-dot" style="background:#4ade80"></div><div class="src-name">Prometheus</div><div class="src-status">●</div></div>
+      <div class="source-item"><div class="src-dot" style="background:#4ade80"></div><div class="src-name">OpenAI Usage</div><div class="src-status">●</div></div>
+      <div class="source-item"><div class="src-dot" style="background:#4ade80"></div><div class="src-name">Anthropic API</div><div class="src-status">●</div></div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Alertes</div>
+      <button class="side-btn"><span class="icon">🔴</span>Fraude GPT-4 <span class="badge">Critique</span></button>
+      <button class="side-btn"><span class="icon">🟡</span>US-East PUE <span class="badge" style="background:rgba(245,158,11,.15);color:var(--amber)">⚠</span></button>
+    </div>
+  </div>
+  <content>
+    <!-- DASHBOARD -->
+    <div id="page-dashboard" class="page active">
+      <div class="connect-hero fade-in in">
+        <h2>⚡ Bonjour — Voici l'état de votre IA d'entreprise</h2>
+        <p>SPARK IA agrège en temps réel vos données cloud, infrastructure et usage IA pour calculer votre empreinte exacte et vous proposer des optimisations concrètes et durables.</p>
+        <div class="sources-grid">
+          <div class="src-card connected"><div class="src-card-top"><span class="src-logo">☁️</span><span class="src-tag on">Connecté</span></div><h4>Cloud providers</h4><p>AWS · Azure · GCP<br>coûts + consommation</p></div>
+          <div class="src-card connected"><div class="src-card-top"><span class="src-logo">📊</span><span class="src-tag on">Connecté</span></div><h4>Monitoring</h4><p>Datadog · Prometheus<br>métriques GPU/CPU</p></div>
+          <div class="src-card connected"><div class="src-card-top"><span class="src-logo">🤖</span><span class="src-tag on">Connecté</span></div><h4>API IA</h4><p>OpenAI · Anthropic<br>tokens · requêtes</p></div>
+          <div class="src-card"><div class="src-card-top"><span class="src-logo">🏭</span><span class="src-tag off">Disponible</span></div><h4>ERP / SAP</h4><p>données financières<br>coûts opérationnels</p></div>
+        </div>
+      </div>
+      <div class="kpi-strip">
+        <div class="kpi fade-in in"><div class="kpi-glow" style="background:rgba(0,229,160,.4)"></div><div class="kpi-label">CO₂ total / trim.</div><div class="kpi-val green">41<span class="kpi-unit">t CO₂</span></div><div class="kpi-delta green">↓ 23% vs T4 2025</div></div>
+        <div class="kpi fade-in in"><div class="kpi-glow" style="background:rgba(56,189,248,.4)"></div><div class="kpi-label">Énergie consommée</div><div class="kpi-val blue">284<span class="kpi-unit">MWh</span></div><div class="kpi-delta green">↓ 18% vs T4 2025</div></div>
+        <div class="kpi fade-in in"><div class="kpi-glow" style="background:rgba(245,158,11,.3)"></div><div class="kpi-label">Coût cloud total</div><div class="kpi-val amber">118<span class="kpi-unit">k€</span></div><div class="kpi-delta green">↓ 31% vs T4 2025</div></div>
+        <div class="kpi fade-in in"><div class="kpi-glow" style="background:rgba(167,139,250,.3)"></div><div class="kpi-label">Eau datacenter</div><div class="kpi-val" style="color:var(--violet)">1.2<span class="kpi-unit">ML</span></div><div class="kpi-delta green">↓ 9% vs T4 2025</div></div>
+        <div class="kpi fade-in in"><div class="kpi-glow" style="background:rgba(0,229,160,.4)"></div><div class="kpi-label">Score IA responsable</div><div class="kpi-val green">75<span class="kpi-unit">/100</span></div><div class="kpi-delta green">↑ +8 pts</div></div>
+      </div>
+      <div class="sh fade-in in"><h3>Pipeline de collecte des données</h3><span>Mise à jour toutes les 5 min</span></div>
+      <div class="flow-wrap fade-in in" style="gap:4px;margin-bottom:20px">
+        <div class="flow-col"><h4>📥 Sources collectées</h4><div class="data-item"><div class="di-dot" style="background:#4ade80"></div><div class="di-name">Modèle utilisé</div><div class="di-val">GPT-4 / Mistral</div></div><div class="data-item"><div class="di-dot" style="background:#4ade80"></div><div class="di-name">Requêtes/jour</div><div class="di-val">48 200</div></div><div class="data-item"><div class="di-dot" style="background:#4ade80"></div><div class="di-name">Tokens utilisés</div><div class="di-val">38.4M</div></div><div class="data-item"><div class="di-dot" style="background:#4ade80"></div><div class="di-name">Temps GPU (h)</div><div class="di-val">1 240</div></div><div class="data-item"><div class="di-dot" style="background:#f59e0b"></div><div class="di-name">Datacenter</div><div class="di-val">EU + US</div></div><div class="data-item"><div class="di-dot" style="background:#4ade80"></div><div class="di-name">Source énergie</div><div class="di-val">Mix 61%🌱</div></div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-col"><h4>⚙️ Calculs SPARK IA</h4><div class="data-item"><div class="di-dot" style="background:#38bdf8"></div><div class="di-name">kWh estimés</div><div class="di-val">284 MWh</div></div><div class="data-item"><div class="di-dot" style="background:#38bdf8"></div><div class="di-name">gCO₂/kWh moyen</div><div class="di-val">144 g</div></div><div class="data-item"><div class="di-dot" style="background:#38bdf8"></div><div class="di-name">Efficacité modèle</div><div class="di-val">Analyse IA</div></div><div class="data-item"><div class="di-dot" style="background:#38bdf8"></div><div class="di-name">Coût réel vs budget</div><div class="di-val">+12% dépassé</div></div><div class="data-item"><div class="di-dot" style="background:#38bdf8"></div><div class="di-name">Surdimensionnement</div><div class="di-val">3 projets détectés</div></div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-col"><h4>📊 Indicateurs finaux</h4><div class="metric-item"><div class="mi-label">Empreinte carbone</div><div class="mi-val green">41 t CO₂</div></div><div class="metric-item"><div class="mi-label">Coût cloud total</div><div class="mi-val amber">118 k€</div></div><div class="metric-item"><div class="mi-label">Score IA responsable</div><div class="mi-val green">75/100</div></div><div class="metric-item"><div class="mi-label">Potentiel d'économie</div><div class="mi-val" style="color:var(--blue)">−48 k€/an</div></div></div>
+      </div>
+      <div class="g3">
+        <div class="panel fade-in in"><div class="sh"><h3>CO₂ par projet IA</h3><span>t CO₂ / trimestre</span></div><div class="bar-chart"><div class="bar-row"><div class="bar-name">Détection fraude</div><div class="bar-track"><div class="bar-fill bf-r" style="width:92%">18.4t</div></div></div><div class="bar-row"><div class="bar-name">Copilote devs</div><div class="bar-track"><div class="bar-fill bf-a" style="width:58%">6.1t</div></div></div><div class="bar-row"><div class="bar-name">Forecast ventes</div><div class="bar-track"><div class="bar-fill bf-a" style="width:50%">5.2t</div></div></div><div class="bar-row"><div class="bar-name">Analyse data client</div><div class="bar-track"><div class="bar-fill bf-a" style="width:36%">3.8t</div></div></div><div class="bar-row"><div class="bar-name">Vision produit</div><div class="bar-track"><div class="bar-fill bf-g" style="width:20%">2.1t</div></div></div><div class="bar-row"><div class="bar-name">Chatbot RH</div><div class="bar-track"><div class="bar-fill bf-g" style="width:12%">1.2t</div></div></div><div class="bar-row"><div class="bar-name">Résumé docs</div><div class="bar-track"><div class="bar-fill bf-g" style="width:9%">0.9t</div></div></div></div></div>
+        <div class="panel fade-in in" style="display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="sh" style="width:100%"><h3>Score global</h3></div><div class="ring-wrap"><svg width="140" height="140" viewBox="0 0 140 140"><circle cx="70" cy="70" r="58" fill="none" stroke="#162028" stroke-width="12"/><circle cx="70" cy="70" r="58" fill="none" stroke="url(#gr1)" stroke-width="12" stroke-dasharray="364.4" stroke-dashoffset="91.1" stroke-linecap="round" transform="rotate(-90 70 70)"/><defs><linearGradient id="gr1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00c880"/><stop offset="100%" stop-color="#00e5a0"/></linearGradient></defs></svg><div style="position:absolute;display:flex;flex-direction:column;align-items:center"><div class="ring-val">75</div><div style="font-size:10px;color:var(--dim);font-family:var(--mono)">/100</div></div></div><div class="ring-sub">Bien · Amélioration possible<br>sur Détection fraude & Copilote</div><div style="font-size:12px;color:var(--spark);font-family:var(--mono);margin-top:8px">↑ +8 pts vs T4 2025</div></div>
+      </div>
+      <div class="panel fade-in in" style="margin-bottom:20px"><div class="sh"><h3>Tous les projets IA</h3><span>12 projets · données temps réel</span></div><table class="tbl"><thead><tr><th>Projet</th><th>Modèle actuel</th><th>Requêtes/j</th><th>CO₂ t/trim</th><th>Coût cloud/trim</th><th>Statut</th><th>Score</th><th>Action</th></tr></thead><tbody><tr><td>🤖 Chatbot RH</td><td style="font-family:var(--mono);font-size:12px">Mistral 7B</td><td style="font-family:var(--mono)">3 200</td><td style="font-family:var(--mono)">1.2</td><td style="font-family:var(--mono)">8 400€</td><td><span class="tag-small tag-g">Optimisé</span></td><td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:88%;background:var(--spark)"></div></div><span style="font-size:11px;font-family:var(--mono)">88</span></div></td><td><span style="font-size:11px;color:var(--dim);font-family:var(--mono)">—</span></td></tr><tr><td>📊 Analyse data</td><td style="font-family:var(--mono);font-size:12px">GPT-4o</td><td style="font-family:var(--mono)">8 100</td><td style="font-family:var(--mono)">3.8</td><td style="font-family:var(--mono)">22 100€</td><td><span class="tag-small tag-a">À revoir</span></td><td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:62%;background:var(--amber)"></div></div><span style="font-size:11px;font-family:var(--mono)">62</span></div></td><td><span style="font-size:11px;color:var(--spark);cursor:pointer;font-family:var(--mono)" onclick="showPage('simulator',null,null)">→ Simuler</span></td></tr><tr><td>💻 Copilote devs</td><td style="font-family:var(--mono);font-size:12px">Claude Sonnet</td><td style="font-family:var(--mono)">12 400</td><td style="font-family:var(--mono)">6.1</td><td style="font-family:var(--mono)">31 200€</td><td><span class="tag-small tag-a">À revoir</span></td><td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:58%;background:var(--amber)"></div></div><span style="font-size:11px;font-family:var(--mono)">58</span></div></td><td><span style="font-size:11px;color:var(--spark);cursor:pointer;font-family:var(--mono)" onclick="showPage('simulator',null,null)">→ Simuler</span></td></tr><tr><td>🔍 Détection fraude</td><td style="font-family:var(--mono);font-size:12px">GPT-4 (full)</td><td style="font-family:var(--mono)">22 000</td><td style="font-family:var(--mono)">18.4</td><td style="font-family:var(--mono)">48 000€</td><td><span class="tag-small tag-r">Critique</span></td><td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:31%;background:var(--red)"></div></div><span style="font-size:11px;font-family:var(--mono)">31</span></div></td><td><span style="font-size:11px;color:var(--spark);cursor:pointer;font-family:var(--mono);font-weight:700" onclick="showPage('simulator',null,null)">⚡ Simuler</span></td></tr><tr><td>📝 Résumé documents</td><td style="font-family:var(--mono);font-size:12px">Llama 3 8B</td><td style="font-family:var(--mono)">5 800</td><td style="font-family:var(--mono)">0.9</td><td style="font-family:var(--mono)">3 100€</td><td><span class="tag-small tag-g">Optimisé</span></td><td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:91%;background:var(--spark)"></div></div><span style="font-size:11px;font-family:var(--mono)">91</span></div></td><td><span style="font-size:11px;color:var(--dim);font-family:var(--mono)">—</span></td></tr></tbody></table></div>
+      <div class="sh fade-in in"><h3>Recommandations prioritaires</h3><span>Générées par SPARK IA à partir de vos données réelles</span></div>
+      <div class="reco-list fade-in in" style="margin-bottom:24px">
+        <div class="reco"><div class="reco-ic ri-g">🔄</div><div class="reco-body"><h4>Remplacer GPT-4 par Mistral fine-tuné pour la Détection de fraude</h4><p>GPT-4 est massivement surdimensionné. Un Mistral 7B fine-tuné atteint 98.2% de précision identique · réduction de 88% de la consommation</p><div class="reco-priority"><div class="priority-dot" style="background:var(--red)"></div><span style="font-size:10px;font-family:var(--mono);color:var(--red)">PRIORITÉ HAUTE · Impact immédiat</span></div></div><div class="reco-kpi"><div class="val green">−30 k€</div><div class="lbl">économies/an</div><div class="val green" style="font-size:12px;margin-top:6px">−15.8 t CO₂</div><div class="lbl">réduction/an</div></div></div>
+        <div class="reco"><div class="reco-ic ri-a">📍</div><div class="reco-body"><h4>Migrer l'Analyse data vers le datacenter EU-West (Paris)</h4><p>US-East : 318 gCO₂/kWh vs 52 gCO₂/kWh à Paris · facteur 6x plus propre · conformité RGPD incluse</p><div class="reco-priority"><div class="priority-dot" style="background:var(--amber)"></div><span style="font-size:10px;font-family:var(--mono);color:var(--amber)">PRIORITÉ MOYENNE · Migration 2 semaines</span></div></div><div class="reco-kpi"><div class="val green">−2.6 t CO₂</div><div class="lbl">réduction/an</div><div class="val green" style="font-size:12px;margin-top:6px">−4 200€</div><div class="lbl">coût infra/an</div></div></div>
+        <div class="reco"><div class="reco-ic ri-b">⏱️</div><div class="reco-body"><h4>Désactiver le Copilote développeurs hors heures de bureau</h4><p>Tourne 24/7 mais usage réel concentré 8h–19h · 65% du temps GPU consommé à vide · scheduler automatique disponible</p><div class="reco-priority"><div class="priority-dot" style="background:var(--blue)"></div><span style="font-size:10px;font-family:var(--mono);color:var(--blue)">PRIORITÉ MOYENNE · Activation en 1 clic</span></div></div><div class="reco-kpi"><div class="val green">−18.7 k€</div><div class="lbl">économies/an</div><div class="val green" style="font-size:12px;margin-top:6px">−3.2 t CO₂</div><div class="lbl">réduction/an</div></div></div>
+      </div>
+    </div>
+    <!-- SOURCES -->
+    <div id="page-sources" class="page"><div class="sh fade-in"><h3>Sources de données — Connexions disponibles</h3><span>SPARK IA collecte uniquement des métriques techniques · aucune donnée métier</span></div><div class="sources-full-grid"><div class="src-full-card connected fade-in"><div class="src-full-top"><div class="src-full-logo">☁️</div><div class="src-full-info"><h4>Amazon Web Services</h4><p>CloudWatch · Cost Explorer</p></div><div class="src-full-status"><span class="status-on">● Connecté</span></div></div><div class="src-metrics"><div class="src-metric"><div class="sm-val green">142 MWh</div><div class="sm-label">Énergie / trim.</div></div><div class="src-metric"><div class="sm-val amber">68.2 k€</div><div class="sm-label">Coût cloud / trim.</div></div></div><div class="src-data-list">Données collectées :<br><span>→</span> Consommation EC2 · GPU · S3<br><span>→</span> Coûts par service · par région<br><span>→</span> Localisation datacenter · PUE</div><button class="btn-src disconnect" onclick="toggleSrc(this,'AWS')">◌ Déconnecter</button></div><div class="src-full-card connected fade-in"><div class="src-full-top"><div class="src-full-logo">🔷</div><div class="src-full-info"><h4>Microsoft Azure</h4><p>Monitor · Cost Management</p></div><div class="src-full-status"><span class="status-on">● Connecté</span></div></div><div class="src-metrics"><div class="src-metric"><div class="sm-val green">87 MWh</div><div class="sm-label">Énergie / trim.</div></div><div class="src-metric"><div class="sm-val amber">31.4 k€</div><div class="sm-label">Coût cloud / trim.</div></div></div><div class="src-data-list">Données collectées :<br><span>→</span> VM · AKS · Azure OpenAI usage<br><span>→</span> Coûts par abonnement<br><span>→</span> Région · carbon intensity Azure</div><button class="btn-src disconnect" onclick="toggleSrc(this,'Azure')">◌ Déconnecter</button></div><div class="src-full-card connected fade-in"><div class="src-full-top"><div class="src-full-logo">🌐</div><div class="src-full-info"><h4>Google Cloud Platform</h4><p>Billing API · Carbon Footprint</p></div><div class="src-full-status"><span class="status-on">● Connecté</span></div></div><div class="src-metrics"><div class="src-metric"><div class="sm-val green">55 MWh</div><div class="sm-label">Énergie / trim.</div></div><div class="src-metric"><div class="sm-val amber">18.4 k€</div><div class="sm-label">Coût cloud / trim.</div></div></div><div class="src-data-list">Données collectées :<br><span>→</span> Vertex AI · BigQuery · GKE<br><span>→</span> Carbon Footprint API native<br><span>→</span> Efficacité énergétique GCP</div><button class="btn-src disconnect" onclick="toggleSrc(this,'GCP')">◌ Déconnecter</button></div><div class="src-full-card connected fade-in"><div class="src-full-top"><div class="src-full-logo">🤖</div><div class="src-full-info"><h4>OpenAI Usage API</h4><p>Tokens · Requêtes · Coûts</p></div><div class="src-full-status"><span class="status-on">● Connecté</span></div></div><div class="src-metrics"><div class="src-metric"><div class="sm-val green">28.4M</div><div class="sm-label">Tokens / trim.</div></div><div class="src-metric"><div class="sm-val amber">42.6 k€</div><div class="sm-label">Coût API / trim.</div></div></div><div class="src-data-list">Données collectées :<br><span>→</span> Tokens input/output par modèle<br><span>→</span> Nb requêtes · latence<br><span>→</span> Modèles utilisés · fréquence</div><button class="btn-src disconnect" onclick="toggleSrc(this,'OpenAI')">◌ Déconnecter</button></div><div class="src-full-card connected fade-in"><div class="src-full-top"><div class="src-full-logo">⚡</div><div class="src-full-info"><h4>Anthropic API</h4><p>Claude usage · Billing</p></div><div class="src-full-status"><span class="status-on">● Connecté</span></div></div><div class="src-metrics"><div class="src-metric"><div class="sm-val green">10M</div><div class="sm-label">Tokens / trim.</div></div><div class="src-metric"><div class="sm-val amber">9.6 k€</div><div class="sm-label">Coût API / trim.</div></div></div><div class="src-data-list">Données collectées :<br><span>→</span> Usage Claude Opus/Sonnet/Haiku<br><span>→</span> Tokens · requêtes · coûts<br><span>→</span> Répartition par use case</div><button class="btn-src disconnect" onclick="toggleSrc(this,'Anthropic')">◌ Déconnecter</button></div><div class="src-full-card fade-in"><div class="src-full-top"><div class="src-full-logo">🏭</div><div class="src-full-info"><h4>SAP ERP</h4><p>Finances · Achats</p></div><div class="src-full-status"><span class="status-off">○ Disponible</span></div></div><div class="src-metrics"><div class="src-metric"><div class="sm-val" style="color:var(--dim)">—</div><div class="sm-label">En attente</div></div><div class="src-metric"><div class="sm-val" style="color:var(--dim)">—</div><div class="sm-label">En attente</div></div></div><div class="src-data-list">Données disponibles :<br><span>→</span> Coûts opérationnels IA<br><span>→</span> Budget vs réel<br><span>→</span> ROI par projet</div><button class="btn-src" onclick="toggleSrc(this,'SAP')">+ Connecter SAP</button></div></div></div>
+    <!-- SIMULATOR -->
+    <div id="page-simulator" class="page"><div class="sh fade-in"><h3>Simulateur d'impact & Plan de migration</h3><span>Comparez modèles · estimez les gains réels avant de migrer</span></div><div class="sim-layout"><div class="sim-panel fade-in"><div class="field"><label>Cas d'usage</label><select id="s-use" onchange="simulate()"><option value="fraud">Détection de fraude (⚠ Critique)</option><option value="code">Copilote développeurs</option><option value="analysis">Analyse data client</option><option value="chatbot">Chatbot RH</option></select></div><div class="field"><label>Modèle actuel</label><select id="s-cur" onchange="simulate()"><option value="gpt4">GPT-4 (full) — 20$/M tokens</option><option value="gpt4o">GPT-4o — 10$/M tokens</option><option value="claude-opus">Claude Opus 4 — 15$/M tokens</option><option value="claude-sonnet">Claude Sonnet 4 — 3$/M tokens</option><option value="llama70b">Llama 3 70B (self-hosted)</option><option value="mistral-large">Mistral Large — 8$/M tokens</option></select></div><div class="field"><label>Requêtes / jour : <span id="rv" style="color:var(--spark)">22 000</span></label><input type="range" id="s-req" min="100" max="100000" step="100" value="22000" oninput="document.getElementById('rv').textContent=parseInt(this.value).toLocaleString('fr');simulate()"><div class="range-row"><span>100</span><span>100 000</span></div></div><div class="field"><label>Tokens moyens / requête</label><select id="s-tok" onchange="simulate()"><option value="200">Court (200 tokens)</option><option value="800" selected>Moyen (800 tokens)</option><option value="2000">Long (2 000 tokens)</option><option value="8000">Très long (8 000 tokens)</option></select></div><div class="field"><label>Datacenter actuel</label><select id="s-dc" onchange="simulate()"><option value="us">🇺🇸 US-East — 318 gCO₂/kWh</option><option value="eu">🇪🇺 EU-West (Paris) — 52 gCO₂/kWh</option><option value="asia">🌏 APAC Singapour — 492 gCO₂/kWh</option></select></div><div class="field"><label>Migrer vers</label><select id="s-dc2" onchange="simulate()"><option value="eu">🇪🇺 EU-West (Paris) — 52 gCO₂/kWh</option><option value="us">🇺🇸 US-East — 318 gCO₂/kWh</option><option value="nordics">🇸🇪 Nordics — 22 gCO₂/kWh</option></select></div><button class="btn-run" onclick="simulate()">⚡ Lancer la simulation</button></div><div class="sim-results fade-in"><div class="compare-cards"><div class="cc"><div class="cc-label">Situation actuelle</div><div class="cc-model" id="res-cur-name">GPT-4 · US-East</div><div class="stat"><span>CO₂ / an</span><span class="sv red" id="res-cur-co2">—</span></div><div class="stat"><span>Énergie / an</span><span class="sv" id="res-cur-kwh">—</span></div><div class="stat"><span>Coût API / an</span><span class="sv" id="res-cur-cost">—</span></div><div class="stat"><span>Eau / an</span><span class="sv" id="res-cur-water">—</span></div></div><div class="cc best"><div class="cc-label">✨ Solution recommandée</div><div class="cc-model" id="res-alt-name">Mistral 7B fine-tuné · EU-West</div><div class="stat"><span>CO₂ / an</span><span class="sv green" id="res-alt-co2">—</span></div><div class="stat"><span>Énergie / an</span><span class="sv green" id="res-alt-kwh">—</span></div><div class="stat"><span>Coût API / an</span><span class="sv green" id="res-alt-cost">—</span></div><div class="stat"><span>Eau / an</span><span class="sv green" id="res-alt-water">—</span></div></div></div><div class="saving-card"><div class="big" id="sc-pct">Lancez la simulation →</div><div class="sub" id="sc-sub">Configurez les paramètres et cliquez sur Lancer</div><div class="details" id="sc-details" style="display:none"><div class="detail"><div class="dv green" id="sc-co2">—</div><div class="dl">t CO₂ évitées/an</div></div><div class="detail"><div class="dv amber" id="sc-cost">—</div><div class="dl">économies/an</div></div><div class="detail"><div class="dv blue" id="sc-kwh">—</div><div class="dl">MWh économisés/an</div></div></div></div><div class="roadmap"><h4>📋 Plan de migration recommandé</h4><div class="road-step"><div class="road-num">1</div><div><div class="rt">Semaine 1–2 · Fine-tuning du modèle alternatif</div><div class="rd">Utiliser vos données historiques anonymisées · validation sur jeu de test</div></div></div><div class="road-step"><div class="road-num">2</div><div><div class="rt">Semaine 3 · Déploiement en shadow mode (A/B)</div><div class="rd">Nouveau modèle en parallèle · comparaison automatique des résultats</div></div></div><div class="road-step"><div class="road-num">3</div><div><div class="rt">Semaine 4 · Migration datacenter cible</div><div class="rd">Basculement vers <span id="dc-target-name">EU-West (Paris)</span> · conformité RGPD vérifiée</div></div></div><div class="road-step"><div class="road-num">4</div><div><div class="rt">Mois 2 · Monitoring & ajustement</div><div class="rd">Dashboard SPARK IA · alertes automatiques · rapport RSE mis à jour</div></div></div></div></div></div></div>
+    <!-- INFRA -->
+    <div id="page-infra" class="page"><div class="sh fade-in"><h3>Infrastructure — Datacenters actifs</h3><span>Données temps réel · Electricity Maps · PUE mesuré</span></div><div class="dc-grid"><div class="dc-card dc-best fade-in"><div class="dc-header"><div class="dc-flag">🇫🇷</div><div><h4>EU-West · Paris</h4><p>OVHcloud / AWS eu-west-3</p></div><span class="dc-badge tag-small tag-g">Recommandé</span></div><div class="sr"><div class="sk">PUE</div><div class="sv green">1.22</div></div><div class="sr"><div class="sk">Énergie renouvelable</div><div class="sv green">84%</div></div><div class="sr"><div class="sk">Intensité carbone</div><div class="sv green">52 gCO₂/kWh</div></div><div class="sr"><div class="sk">RGPD</div><div class="sv green">✓ Conforme</div></div><div class="sr"><div class="sk">Charge actuelle</div><div class="sv">67%</div></div></div><div class="dc-card dc-warn fade-in"><div class="dc-header"><div class="dc-flag">🇺🇸</div><div><h4>US-East · Virginie</h4><p>AWS us-east-1</p></div><span class="dc-badge tag-small tag-a">À réduire</span></div><div class="sr"><div class="sk">PUE</div><div class="sv amber">1.51</div></div><div class="sr"><div class="sk">Énergie renouvelable</div><div class="sv amber">41%</div></div><div class="sr"><div class="sk">Intensité carbone</div><div class="sv amber">318 gCO₂/kWh</div></div><div class="sr"><div class="sk">RGPD</div><div class="sv red">✗ Non conforme</div></div><div class="sr"><div class="sk">Charge actuelle</div><div class="sv">89%</div></div></div><div class="dc-card dc-bad fade-in"><div class="dc-header"><div class="dc-flag">🇸🇬</div><div><h4>APAC · Singapour</h4><p>AWS ap-southeast-1</p></div><span class="dc-badge tag-small tag-r">Critique</span></div><div class="sr"><div class="sk">PUE</div><div class="sv red">1.74</div></div><div class="sr"><div class="sk">Énergie renouvelable</div><div class="sv red">18%</div></div><div class="sr"><div class="sk">Intensité carbone</div><div class="sv red">492 gCO₂/kWh</div></div><div class="sr"><div class="sk">RGPD</div><div class="sv red">✗ Non conforme</div></div><div class="sr"><div class="sk">Charge actuelle</div><div class="sv">72%</div></div></div></div><div class="g2"><div class="panel fade-in"><div class="sh"><h3>Consommation énergétique par région</h3><span>MWh / trimestre</span></div><div class="bar-chart"><div class="bar-row"><div class="bar-name">EU-West (Paris)</div><div class="bar-track"><div class="bar-fill bf-g" style="width:51%">142 MWh</div></div></div><div class="bar-row"><div class="bar-name">US-East (Virginie)</div><div class="bar-track"><div class="bar-fill bf-a" style="width:79%">87 MWh</div></div></div><div class="bar-row"><div class="bar-name">APAC (Singapour)</div><div class="bar-track"><div class="bar-fill bf-r" style="width:35%">55 MWh</div></div></div></div></div><div class="panel fade-in"><div class="sh"><h3>Empreinte CO₂ par région</h3><span>t CO₂ / trimestre</span></div><div class="bar-chart"><div class="bar-row"><div class="bar-name">EU-West (Paris)</div><div class="bar-track"><div class="bar-fill bf-g" style="width:18%">7.4t</div></div></div><div class="bar-row"><div class="bar-name">US-East (Virginie)</div><div class="bar-track"><div class="bar-fill bf-r" style="width:70%">27.7t</div></div></div><div class="bar-row"><div class="bar-name">APAC (Singapour)</div><div class="bar-track"><div class="bar-fill bf-r" style="width:15%">5.9t</div></div></div></div><div style="margin-top:14px;font-size:12px;font-family:var(--mono);color:var(--dim);background:rgba(0,229,160,.05);border:1px solid rgba(0,229,160,.15);border-radius:8px;padding:10px">💡 Migrer US-East → EU-West économiserait <span style="color:var(--spark);font-weight:700">20.3 t CO₂/an</span> immédiatement</div></div></div></div>
+    <!-- RSE -->
+    <div id="page-rse" class="page"><div class="rse-hero fade-in"><div class="rse-icon">🌍</div><div class="rse-text"><h2>Rapport RSE · Impact IA — T1 2026</h2><p>SPARK IA génère automatiquement votre rapport d'impact environnemental de l'IA à partir de vos données réelles. Prêt pour votre CSRD, reporting ESG et comité RSE.</p><button class="btn-export" onclick="toast('📄 Export PDF en cours de génération...')">⬇ Exporter PDF · CSRD ready</button></div></div><div class="rse-metrics"><div class="rse-m fade-in"><div class="rv green">41 t</div><div class="rl">CO₂ émis (IA seule)</div></div><div class="rse-m fade-in"><div class="rv amber">−23%</div><div class="rl">vs trimestre précédent</div></div><div class="rse-m fade-in"><div class="rv blue">284 MWh</div><div class="rl">énergie consommée</div></div><div class="rse-m fade-in"><div class="rv" style="color:var(--violet)">75/100</div><div class="rl">Score IA Responsable</div></div></div><div class="g2"><div class="panel fade-in"><div class="sh"><h3>Réductions obtenues ce trimestre</h3></div><div class="bar-chart"><div class="bar-row"><div class="bar-name">Migration Mistral</div><div class="bar-track"><div class="bar-fill bf-g" style="width:80%">−8.4 t CO₂</div></div></div><div class="bar-row"><div class="bar-name">Scheduler copilote</div><div class="bar-track"><div class="bar-fill bf-g" style="width:40%">−3.2 t CO₂</div></div></div><div class="bar-row"><div class="bar-name">Batch forecast</div><div class="bar-track"><div class="bar-fill bf-g" style="width:30%">−2.1 t CO₂</div></div></div></div></div><div class="panel fade-in"><div class="sh"><h3>Objectifs 2026</h3></div><div class="bar-chart"><div class="bar-row"><div class="bar-name">CO₂ IA (cible −50%)</div><div class="bar-track"><div class="bar-fill bf-g" style="width:46%">46%</div></div></div><div class="bar-row"><div class="bar-name">Coût cloud (−40%)</div><div class="bar-track"><div class="bar-fill bf-a" style="width:31%">31%</div></div></div><div class="bar-row"><div class="bar-name">Score IA (cible 90)</div><div class="bar-track"><div class="bar-fill bf-g" style="width:83%">83%</div></div></div></div></div></div><div class="timeline fade-in"><div class="sh"><h3>Historique des actions menées</h3></div><div class="tl-item"><div class="tl-date">Jan 2026</div><div class="tl-dot" style="background:var(--spark)"></div><div class="tl-content"><h5>Migration Chatbot RH → Mistral 7B</h5><p>−1.8 t CO₂/an · −6 200€/an · Score : 48 → 88</p></div></div><div class="tl-item"><div class="tl-date">Fév 2026</div><div class="tl-dot" style="background:var(--spark)"></div><div class="tl-content"><h5>Activation scheduler copilote (8h–20h)</h5><p>−3.2 t CO₂/an · −18 700€/an · GPU idle éliminé</p></div></div><div class="tl-item"><div class="tl-date">Mar 2026</div><div class="tl-dot" style="background:var(--amber)"></div><div class="tl-content"><h5>⚠ Alerte : Détection fraude GPT-4 surdimensionné</h5><p>Identifié par SPARK IA · Plan de migration en cours · Impact potentiel −30 k€/an</p></div></div></div></div>
+  </content>
+</div>
+<script>
+function showPage(id,navEl,sideEl){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
+  document.querySelectorAll('.side-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(navEl)navEl.classList.add('active');
+  if(sideEl)sideEl.classList.add('active');
+  const sideMap={dashboard:0,sources:1,simulator:2,infra:3,rse:4};
+  document.querySelectorAll('.side-btn')[sideMap[id]]?.classList.add('active');
+  setTimeout(reveal,80);
+}
+function reveal(){document.querySelectorAll('.page.active .fade-in').forEach((el,i)=>{setTimeout(()=>el.classList.add('in'),i*55)});}
+window.addEventListener('load',()=>setTimeout(reveal,100));
+function toast(msg){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+function toggleSrc(btn,name){const card=btn.closest('.src-full-card');const statusEl=card.querySelector('.src-full-status span');if(card.classList.contains('connected')){card.classList.remove('connected');statusEl.textContent='○ Disponible';statusEl.className='status-off';btn.textContent='+ Connecter '+name;btn.classList.remove('disconnect');toast('🔌 '+name+' déconnecté');}else{card.classList.add('connected');statusEl.textContent='● Connecté';statusEl.className='status-on';btn.textContent='◌ Déconnecter';btn.classList.add('disconnect');toast('✅ '+name+' connecté avec succès');}}
+const MODELS={gpt4:{name:'GPT-4',kwh:0.0029,cpm:0.020,alt:{name:'Mistral 7B fine-tuné',f:0.09}},gpt4o:{name:'GPT-4o',kwh:0.0018,cpm:0.010,alt:{name:'Llama 3 8B fine-tuné',f:0.13}},'claude-opus':{name:'Claude Opus 4',kwh:0.0025,cpm:0.015,alt:{name:'Claude Haiku 3.5',f:0.09}},'claude-sonnet':{name:'Claude Sonnet 4',kwh:0.0014,cpm:0.003,alt:{name:'Mistral Small',f:0.20}},llama70b:{name:'Llama 3 70B',kwh:0.0020,cpm:0.008,alt:{name:'Llama 3 8B',f:0.15}},'mistral-large':{name:'Mistral Large',kwh:0.0016,cpm:0.008,alt:{name:'Mistral 7B',f:0.18}}};
+const DC={eu:52,us:318,asia:492,nordics:22};
+const DC_NAMES={eu:'EU-West (Paris)',us:'US-East',nordics:'Nordics 🇸🇪',asia:'APAC'};
+function fmt(n){if(Math.abs(n)>=1000000)return(n/1000000).toFixed(1)+'M€';if(Math.abs(n)>=1000)return(n/1000).toFixed(0)+' k€';return n.toFixed(0)+'€';}
+function fmtE(n){if(n>=1000)return(n/1000).toFixed(1)+' GWh';return n.toFixed(0)+' MWh';}
+function simulate(){
+  const m=MODELS[document.getElementById('s-cur').value];
+  const req=parseInt(document.getElementById('s-req').value);
+  const tok=parseInt(document.getElementById('s-tok').value);
+  const dcCur=document.getElementById('s-dc').value;
+  const dcAlt=document.getElementById('s-dc2').value;
+  const annReq=req*365;const annTokM=(annReq*tok)/1e6;
+  const kwhCur=annTokM*m.kwh*1000;const co2Cur=(kwhCur*DC[dcCur])/1e6;const costCur=annTokM*m.cpm*1000;const waterCur=kwhCur*0.0018;
+  const kwhAlt=kwhCur*m.alt.f*(DC[dcAlt]/DC[dcCur]);const co2Alt=(kwhAlt*DC[dcAlt])/1e6;const costAlt=costCur*m.alt.f;const waterAlt=kwhAlt*0.0008;
+  document.getElementById('res-cur-name').textContent=m.name+' · '+DC_NAMES[dcCur];
+  document.getElementById('res-alt-name').textContent=m.alt.name+' · '+DC_NAMES[dcAlt];
+  document.getElementById('res-cur-co2').textContent=co2Cur.toFixed(1)+' t CO₂';
+  document.getElementById('res-cur-kwh').textContent=fmtE(kwhCur);
+  document.getElementById('res-cur-cost').textContent=fmt(costCur);
+  document.getElementById('res-cur-water').textContent=waterCur.toFixed(2)+' ML';
+  document.getElementById('res-alt-co2').textContent=co2Alt.toFixed(1)+' t CO₂';
+  document.getElementById('res-alt-kwh').textContent=fmtE(kwhAlt);
+  document.getElementById('res-alt-cost').textContent=fmt(costAlt);
+  document.getElementById('res-alt-water').textContent=waterAlt.toFixed(2)+' ML';
+  const pct=Math.round((1-co2Alt/co2Cur)*100);
+  document.getElementById('sc-pct').textContent='−'+pct+'% d\'impact environnemental';
+  document.getElementById('sc-sub').textContent='En combinant modèle adapté + datacenter plus vert';
+  document.getElementById('sc-details').style.display='flex';
+  document.getElementById('sc-co2').textContent=(co2Cur-co2Alt).toFixed(1)+' t';
+  document.getElementById('sc-cost').textContent=fmt(costCur-costAlt);
+  document.getElementById('sc-kwh').textContent=fmtE(kwhCur-kwhAlt);
+  document.getElementById('dc-target-name').textContent=DC_NAMES[dcAlt];
+}
+</script>
+</body></html>
