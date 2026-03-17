@@ -8,6 +8,8 @@
 ![Stack](https://img.shields.io/badge/Stack-HTML%20·%20CSS%20·%20JavaScript-00c880?style=flat-square&labelColor=0f1a1f)
 ![Context](https://img.shields.io/badge/Contexte-Projet%20Green%20AI-0f6e56?style=flat-square&labelColor=0f1a1f)
  
+### [Voir la demo live](https://anais-rnct.github.io/spark-ia/spark-ia.html)
+ 
 </div>
  
 ---
@@ -40,18 +42,13 @@ Plateforme SaaS conçue pour les grandes entreprises qui veulent piloter l'empre
  
 ## Lancer le prototype
  
-Aucune dépendance, aucun serveur requis. Ouvrez simplement le fichier dans votre navigateur.
- 
 ```bash
 git clone https://github.com/anais-rnct/spark-ia.git
 cd spark-ia
 # Ouvrir spark-ia.html dans Chrome / Firefox / Edge
 ```
  
-Avec VS Code :
-```
-Clic droit sur spark-ia.html → Open with Live Server
-```
+Ou directement en ligne : [anais-rnct.github.io/spark-ia/spark-ia.html](https://anais-rnct.github.io/spark-ia/spark-ia.html)
  
 ---
  
@@ -91,7 +88,7 @@ Pour un projet de détection de fraude avec 22 000 requêtes/jour sur GPT-4 héb
  
 ## Autrice
  
-**[Anaïs Renauct](https://github.com/anais-rnct)** — Etudiante ingénieure, en recherche d'alternance en cybersécurité.
+**[Anaïs Renonciat](https://github.com/anais-rnct)** — Etudiante ingénieure, en recherche d'alternance en cybersécurité.
  
 Projet développé dans le cadre d'un travail sur la Green AI et la responsabilité environnementale des systèmes d'intelligence artificielle en entreprise.
  
@@ -102,4 +99,3 @@ Projet développé dans le cadre d'un travail sur la Green AI et la responsabili
 MIT — libre d'utilisation avec attribution.
  
 <img src="https://capsule-render.vercel.app/api?type=waving&color=00e5a0,00c880,0f6e56&height=100&section=footer" width="100%"/>
- 
